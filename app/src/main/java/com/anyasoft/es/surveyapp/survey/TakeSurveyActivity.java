@@ -252,7 +252,6 @@ public class TakeSurveyActivity extends AppCompatActivity implements
             public void onClick(DialogInterface dialog, int which) {
                 mediaRecorder.start();
                 chronometer.start();
-
             }
         });
         builder.create().show();
@@ -280,7 +279,6 @@ public class TakeSurveyActivity extends AppCompatActivity implements
         final Button btnCancel = (Button) view.findViewById(R.id.btn_cancel);
         final Button btnCapture = (Button) view.findViewById(R.id.btn_capture);
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
         txtMessage.setText(R.string.photo_prompt);
         builder.setCancelable(false);
         builder.setView(view);

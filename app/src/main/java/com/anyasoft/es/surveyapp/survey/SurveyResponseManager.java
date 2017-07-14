@@ -20,9 +20,7 @@ import com.anyasoft.es.surveyapp.internet.NetworkUtil;
 import com.anyasoft.es.surveyapp.internet.VolleySingleton;
 import com.anyasoft.es.surveyapp.logger.L;
 import com.anyasoft.es.surveyapp.question.QuestionModel;
-import com.anyasoft.es.surveyapp.realm.models.Survey;
 import com.anyasoft.es.surveyapp.realm.models.SurveyAnswer;
-import com.anyasoft.es.surveyapp.realm.models.SurveyQuestion;
 import com.anyasoft.es.surveyapp.realm.models.SurveyResponse;
 
 import org.json.JSONException;
@@ -35,7 +33,6 @@ import java.util.Date;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
-import io.realm.RealmList;
 import io.realm.RealmResults;
 
 /**
@@ -74,7 +71,7 @@ public class SurveyResponseManager  {
         String url = ESurvey.URL+"/postPeopleResponse";
         JSONObject resultJson = null;
         try {
-            resultJson = JSONConverter.createJSON();
+            resultJson = JSONConverter.createJSON(ESurvey.getSurveyActivityId());
         } catch (Exception e) {
             L.e("Error in sending file " + e.getMessage());
             pd.dismiss();

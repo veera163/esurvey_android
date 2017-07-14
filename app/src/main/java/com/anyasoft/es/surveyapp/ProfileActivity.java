@@ -25,7 +25,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.anyasoft.es.surveyapp.adapter.ProfileCategAdapter;
-import com.anyasoft.es.surveyapp.adapter.ProfilePlansAdapter;
 import com.anyasoft.es.surveyapp.domains.ServierActivities;
 import com.anyasoft.es.surveyapp.domains.UserDomain;
 import com.anyasoft.es.surveyapp.internet.NetworkUtil;
@@ -345,9 +344,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         private String getParams() {
             JSONObject jsonObject = new JSONObject();
             try {
-                jsonObject.put("surveyorPhone", user.getPhoneNumber());
-                jsonObject.put("startDate", "01/06/2017");
-                jsonObject.put("endDate", "05/06/2017");
+                jsonObject.put("surveyorPhone", "9949771559");
+                //jsonObject.put("surveyorPhone", user.getPhoneNumber());
+                //jsonObject.put("startDate", "01/06/2017");
+                //jsonObject.put("endDate", "05/06/2017");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -385,8 +385,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         "}\n";*/
             //dashBoardCalls.execute(GETACTIVITIES);
             if (servierActivities != null) {
-                rec_plans.setAdapter(new ProfilePlansAdapter(servierActivities.getStatusCounts()));
-                rec_categ.setAdapter(new ProfileCategAdapter(getSupportFragmentManager(),servierActivities.getSurveyCriteria()));
+                //rec_plans.setAdapter(new ProfilePlansAdapter(servierActivities.getStatusCounts()));
+                rec_categ.setAdapter(new ProfileCategAdapter(getSupportFragmentManager(), servierActivities.getSurveyCriteria()));
+                ESurvey.setSurveyActivityId(servierActivities.getSurveyActivityId());
             }
 
 
