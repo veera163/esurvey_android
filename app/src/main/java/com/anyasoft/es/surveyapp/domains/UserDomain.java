@@ -12,6 +12,24 @@ public class UserDomain {
     String emailId;
     String phoneNumber;
     String type;
+    String badgeColor;
+    String surveyorId;
+
+    public String getSurveyorId() {
+        return surveyorId;
+    }
+
+    public void setSurveyorId(String surveyorId) {
+        this.surveyorId = surveyorId;
+    }
+
+    public String getBadgeColor() {
+        return badgeColor;
+    }
+
+    public void setBadgeColor(String badgeColor) {
+        this.badgeColor = badgeColor;
+    }
 
     public String getId() {
         return id;

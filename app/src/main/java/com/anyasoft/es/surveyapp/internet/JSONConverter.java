@@ -1,6 +1,8 @@
 package com.anyasoft.es.surveyapp.internet;
 
+import com.anyasoft.es.surveyapp.ESurvey;
 import com.anyasoft.es.surveyapp.camera.ImageString;
+import com.anyasoft.es.surveyapp.domains.UserDomain;
 import com.anyasoft.es.surveyapp.logger.L;
 import com.anyasoft.es.surveyapp.question.QuestionModel;
 import com.anyasoft.es.surveyapp.realm.models.SurveyAnswer;
@@ -26,6 +28,7 @@ public class JSONConverter {
     private static final String KEY_SET_ID = "set_id";
     private static final String KEY_ATTACHMENT = "attachment";
     private static final String KEY_PHOTO = "photo";
+
     public static JSONObject createJSON(String surveyActivityId) throws JSONException, IOException {
         if (QuestionModel.questionList == null || QuestionModel.questionList.size() == 0) {
             throw new IllegalArgumentException("List is empty");
@@ -44,10 +47,13 @@ public class JSONConverter {
         }//
         json.put(KEY_ARRAY, jsonArray);
         int i = 1;
+        UserDomain userDomain = ESurvey.getUser();
         L.d("ConvertJson()::" + "Qustion details feed");
         json.put("phtoto1", "");
         json.put("phtoto2", "");
         json.put("phtoto3", "");
+        json.put("badgeColor", userDomain.getBadgeColor());
+        json.put("surveyorId", userDomain.getId());
         json.put("surveyActivityId", surveyActivityId);
         if (null != ImageString.photoStringList) {
             L.d("ConvertJson()::" + "attaching the photo");
