@@ -73,7 +73,7 @@
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:text="kiran@gmail.com" />
+                         />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -94,7 +94,7 @@
                         android:inputType="textPassword"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:text="kiran123" />
+                         />
 
                 </android.support.design.widget.TextInputLayout>
 

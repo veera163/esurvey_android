@@ -2,11 +2,11 @@
     <string name="app_name">ESurvey</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
+    <string name="prompt_email">Enter your Phone Number</string>
+    <string name="prompt_password">Enter your Password</string>
     <string name="action_sign_in">Sign</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_email">This Phone Number is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
@@ -19,7 +19,7 @@
     <string name="title_activity_person_details">PersonDetails</string>
     <string name="person_name">Persons Name</string>
     <string name="person_age">Age</string>
-    <string name="person_Caste">Caste</string>
+    <string name="person_Caste">Caste/Criteria</string>
     <string name="Reset">Reset</string>
     <string name="Done">Done</string>
     <string name="submit">Submit </string>
@@ -29,6 +29,25 @@
         <item>Male</item>
         <item>Female</item>
         <item>Others</item>
+    </string-array>
+    <string-array name="castes">
+        <item>OC</item>
+        <item>SC</item>
+        <item>ST</item>
+        <item>Muslim</item>
+        <item>Christian</item>
+        <item>BC-A</item>
+        <item>BC-B</item>
+        <item>BC-C</item>
+        <item>BC-D</item>
+        <item>BC-E</item>
+        <item>BC-Any</item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>Age18to35</item>
+        <item>Age36to55</item>
+        <item>AgeAbove55</item>
+        <item>No-Criteria</item>
     </string-array>
     <string name="title_activity_question_review">Question Review</string>
     <string name="play">Play</string>

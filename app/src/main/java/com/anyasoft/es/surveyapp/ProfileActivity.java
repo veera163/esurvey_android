@@ -16,6 +16,9 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -54,6 +57,34 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private static final int REQUEST_LOCATION_SETTING = 101;
     CardView cardStartSurvey;
     CardView cardSyncAllData;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.profile_menus, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.logout:
+                gotoLoginActivity();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void gotoLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     DashBoardCalls dashBoardCalls;
     RecyclerView rec_plans;
     ViewPager rec_categ;
@@ -96,7 +127,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         isAlltime = true;
         intent = new Intent(this, PostLocationServices.class);
         surveyManager = new SurveyManager(new WeakReference<Context>(this));
-        dashBoardCalls.execute(GETUSER);
+
         //Snackbar.make(cardStartSurvey ,getLocaleLanguage()+"",Snackbar.LENGTH_SHORT ).show();
     }
 
@@ -110,6 +141,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onResume() {
         super.onResume();
+        dashBoardCalls.execute(GETUSER);
         countPendingSurvey();
         if (NetworkUtil.isOnline(this)) {
             if (location == null)
@@ -344,7 +376,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         private String getParams() {
             JSONObject jsonObject = new JSONObject();
             try {
-                jsonObject.put("surveyorPhone", "9949771559");
+                jsonObject.put("surveyorPhone",user.getPhoneNumber());
                 //jsonObject.put("surveyorPhone", user.getPhoneNumber());
                 //jsonObject.put("startDate", "01/06/2017");
                 //jsonObject.put("endDate", "05/06/2017");

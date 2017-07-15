@@ -28,7 +28,7 @@ public class PersonDetailsFragment extends Fragment implements View.OnClickListe
     private TextInputLayout txtInputName;
     private TextInputLayout txtInputRelativeName;
     private TextInputLayout txtInputAge;
-    private TextInputLayout txtInputCast;
+    //private TextInputLayout txtInputCast;
     private TextInputLayout txtInputCorpName;
     private TextInputLayout txtInputWardNum;
     private TextInputLayout txtInputWardName;
@@ -38,6 +38,7 @@ public class PersonDetailsFragment extends Fragment implements View.OnClickListe
     private TextInputLayout txtInputPlace;
     private TextInputLayout txtInputNumOfChildren;
     private AppCompatSpinner spnGender;
+    private AppCompatSpinner edtCaste;
 
     private OnFragmentInteractionListener mListener;
 
@@ -52,7 +53,7 @@ public class PersonDetailsFragment extends Fragment implements View.OnClickListe
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.content_person_details, container, false);
         txtInputAge = (TextInputLayout) view.findViewById(R.id.textLayoutAge);
-        txtInputCast = (TextInputLayout) view.findViewById(R.id.textLayoutCaste);
+        //txtInputCast = (TextInputLayout) view.findViewById(R.id.textLayoutCaste);
         txtInputName = (TextInputLayout) view.findViewById(R.id.textLayoutName);
         txtInputCorpName = (TextInputLayout) view.findViewById(R.id.textLayoutMunicipality);
         txtInputWardName = (TextInputLayout) view.findViewById(R.id.textLayoutWardName);
@@ -64,6 +65,7 @@ public class PersonDetailsFragment extends Fragment implements View.OnClickListe
         txtInputRelativeName = (TextInputLayout) view.findViewById(R.id.textLayoutRelativeName);
         txtInputNumOfChildren = (TextInputLayout) view.findViewById(R.id.textLayoutNumOfChildren);
         spnGender = (AppCompatSpinner) view.findViewById(R.id.spnGender);
+        edtCaste = (AppCompatSpinner) view.findViewById(R.id.edtCaste);
         btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
         btnReset = (Button) view.findViewById(R.id.btnReset);
         btnSubmit.setOnClickListener(this);
@@ -130,7 +132,7 @@ public class PersonDetailsFragment extends Fragment implements View.OnClickListe
     }
     private void sendRequest() {
         String name = txtInputName.getEditText().getText().toString();
-        String cast = txtInputCast.getEditText().getText().toString();
+       // String cast = txtInputCast.getEditText().getText().toString();
         String age = txtInputAge.getEditText().getText().toString();
         String wardName = txtInputWardName.getEditText().getText().toString();
         String corpName = txtInputCorpName.getEditText().getText().toString();
@@ -150,16 +152,18 @@ public class PersonDetailsFragment extends Fragment implements View.OnClickListe
         String numOfChildren = txtInputNumOfChildren.getEditText().getText().toString();
 
         String gender = spnGender.getSelectedItem().toString();
+        String cast = edtCaste.getSelectedItem().toString();
+
         if (name == null || name.equals("")) {
             txtInputName.setError("Can't be left blank");
             return;
         }//
         if (cast == null || cast.equals("")) {
-            txtInputCast.setError("Can't be left blank");
+            //txtInputCast.setError("Can't be left blank");
             return;
         }//
         if (age == null || age.equals("")) {
-            txtInputCast.setError("Can't be left blank");
+            //txtInputCast.setError("Can't be left blank");
             return;
         }//
         //int position =  QuestionModel.questionList.size()-1;
@@ -180,7 +184,6 @@ public class PersonDetailsFragment extends Fragment implements View.OnClickListe
             jsonDetails.put("numOfChildren",numOfChildren+"");
             jsonDetails.put("gender",gender+"");
             jsonDetails.put("fName",relativeName+"");
-
         } catch (JSONException e) {
             e.printStackTrace();
             L.e("sendRequest()::Creating json "+e.getLocalizedMessage());

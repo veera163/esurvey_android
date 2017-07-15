@@ -97,21 +97,27 @@
                 android:inputType="number" />
         </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/textLayoutCaste"
+        <!-- <android.support.design.widget.TextInputLayout
+             android:id="@+id/textLayoutCaste"
+             style="@style/TextInputLayoutStyle"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_below="@+id/textLayoutReligion"
+             android:layout_centerHorizontal="true">
+ -->
+        <android.support.v7.widget.AppCompatSpinner
+            android:id="@+id/edtCaste"
             style="@style/TextInputLayoutStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textLayoutReligion"
-            android:layout_centerHorizontal="true">
-
-            <EditText
-                android:id="@+id/edtCaste"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/person_Caste"
-                android:inputType="textPersonName" />
-        </android.support.design.widget.TextInputLayout>
+            android:layout_centerHorizontal="true"
+            android:entries="@array/castes"
+            android:hint="@string/person_Caste"
+            android:inputType="textPersonName" />
+        <!--
+                </android.support.design.widget.TextInputLayout>
+        -->
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/textLayoutReligion"
@@ -134,7 +140,7 @@
             style="@style/TextInputLayoutStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textLayoutCaste"
+            android:layout_below="@+id/edtCaste"
             android:layout_centerHorizontal="true">
 
             <EditText

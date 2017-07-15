@@ -13,11 +13,14 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anyasoft.es.surveyapp.utility.AppConstant;
@@ -26,6 +29,8 @@ import com.anyasoft.es.surveyapp.utility.LoggerUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.regex.Pattern;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -37,7 +42,6 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Id to identity READ_CONTACTS permission request.
      */
-
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -64,7 +68,17 @@ public class LoginActivity extends AppCompatActivity {
                 return true;
             }
         });*/
-
+        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    //do here your stuff f
+                    attemptLogin();
+                    return true;
+                }
+                return false;
+            }
+        });
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -147,11 +161,11 @@ public class LoginActivity extends AppCompatActivity {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
-        } /*else if (!isEmailValid(email)) {
+        } else if (!isValidMobile(email)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
-        }*/
+        }
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -164,6 +178,12 @@ public class LoginActivity extends AppCompatActivity {
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
         }
+    }
+
+    private boolean isValidMobile(String email) {
+        Pattern patterns = Pattern.compile("^[7-9][0-9]{9}$");
+        return patterns.matcher(email).matches();
+        // return true;
     }
 
     private boolean isEmailValid(String email) {
