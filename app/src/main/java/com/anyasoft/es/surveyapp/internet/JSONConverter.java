@@ -53,7 +53,7 @@ public class JSONConverter {
         json.put("phtoto2", "");
         json.put("phtoto3", "");
         json.put("badgeColor", userDomain.getBadgeColor());
-        json.put("surveyorId", userDomain.getId());
+        json.put("surveyor_id", userDomain.getSurveyorId());
         json.put("surveyActivityId", surveyActivityId);
         if (null != ImageString.photoStringList) {
             L.d("ConvertJson()::" + "attaching the photo");

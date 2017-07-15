@@ -127,7 +127,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         isAlltime = true;
         intent = new Intent(this, PostLocationServices.class);
         surveyManager = new SurveyManager(new WeakReference<Context>(this));
-        dashBoardCalls.execute(GETUSER);
+
         //Snackbar.make(cardStartSurvey ,getLocaleLanguage()+"",Snackbar.LENGTH_SHORT ).show();
     }
 
@@ -141,6 +141,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onResume() {
         super.onResume();
+        dashBoardCalls.execute(GETUSER);
         countPendingSurvey();
         if (NetworkUtil.isOnline(this)) {
             if (location == null)
