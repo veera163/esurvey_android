@@ -236,7 +236,7 @@ public class PersonDetailsActivity extends AppCompatActivity implements View.OnC
         String url = "http://anyasoftindia.com/postPeopleResponse";
         JSONObject resultJson = null;
         try {
-            resultJson = JSONConverter.createJSON();
+            resultJson = JSONConverter.createJSON(ESurvey.getSurveyActivityId());
             if (location != null) {
                 resultJson.put("latlong", location.getLatitude() + "," + location.getLongitude());
                 //resultJson.put("Latitude", location.getLatitude());

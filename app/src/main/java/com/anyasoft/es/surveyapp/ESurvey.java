@@ -35,6 +35,7 @@ public class ESurvey extends Application {
     private static String REFRESHTOKEN = "refreshtoken";
     private static String USERINFO = "userInfo";
     private static Gson gson = new Gson();
+    private static String SURVEYORACTIVITYID = "surveyorActivityId";
 
     @Override
     public void onCreate() {
@@ -69,6 +70,15 @@ public class ESurvey extends Application {
     public static void setUser(String user) {
         editor.putString(USERINFO, user);
         editor.commit();
+    }
+
+    public static void setSurveyActivityId(String surveyActivityId) {
+        editor.putString(SURVEYORACTIVITYID, surveyActivityId);
+        editor.commit();
+    }
+
+    public static String getSurveyActivityId() {
+        return preference.getString(SURVEYORACTIVITYID, "NA");
     }
 
     public static ESurvey getmInstance() {

@@ -55,11 +55,8 @@
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"
             android:screenOrientation="landscape"
-            android:theme="@style/AppTheme.NoActionBar">
-
-
-        </activity>
-        <service android:name=".services.PostLocationServices"></service>
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <service android:name=".services.PostLocationServices"/>
         <activity
             android:name=".question.SurveyAllActivity"
             android:label="@string/title_activity_survey_all"
@@ -71,10 +68,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".camera.CameraActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-        <service android:name=".services.SyncAllSurveyServices"></service>
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <service android:name=".services.SyncAllSurveyServices"/>
     </application>
 
 
