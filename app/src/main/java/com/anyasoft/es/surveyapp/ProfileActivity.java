@@ -375,7 +375,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         private String getParams() {
             JSONObject jsonObject = new JSONObject();
             try {
-                jsonObject.put("surveyorPhone", "9949771559");
+                jsonObject.put("surveyorPhone",user.getPhoneNumber());
                 //jsonObject.put("surveyorPhone", user.getPhoneNumber());
                 //jsonObject.put("startDate", "01/06/2017");
                 //jsonObject.put("endDate", "05/06/2017");
