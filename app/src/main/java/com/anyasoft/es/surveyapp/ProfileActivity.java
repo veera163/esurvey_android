@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -57,6 +58,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private static final int REQUEST_LOCATION_SETTING = 101;
     CardView cardStartSurvey;
     CardView cardSyncAllData;
+    SwipeRefreshLayout refresh;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -116,6 +118,23 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         rec_categ = (ViewPager) findViewById(R.id.rec_categ);
         cardStartSurvey = (CardView) findViewById(R.id.card_view_back);
         cardSyncAllData = (CardView) findViewById(R.id.sync_data);
+        refresh = (SwipeRefreshLayout) findViewById(R.id.refresh);
+        //refresh.setRefreshing(true);
+
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh.setRefreshing(true);
+                new DashBoardCalls().execute(GETUSER);
+            }
+        });
+        refresh.post(new Runnable() {
+            @Override
+            public void run() {
+                new DashBoardCalls().execute(GETUSER);
+            }
+        });
+
         txtCountSurvey = (TextView) findViewById(R.id.title_back_all_sync);
         rec_plans.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         //rec_categ.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -141,7 +160,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onResume() {
         super.onResume();
-        dashBoardCalls.execute(GETUSER);
+        new DashBoardCalls().execute(GETUSER);
         countPendingSurvey();
         if (NetworkUtil.isOnline(this)) {
             if (location == null)
@@ -376,7 +395,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         private String getParams() {
             JSONObject jsonObject = new JSONObject();
             try {
-                jsonObject.put("surveyorPhone",user.getPhoneNumber());
+                jsonObject.put("surveyorPhone", user.getPhoneNumber());
                 //jsonObject.put("surveyorPhone", user.getPhoneNumber());
                 //jsonObject.put("startDate", "01/06/2017");
                 //jsonObject.put("endDate", "05/06/2017");
@@ -421,8 +440,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 rec_categ.setAdapter(new ProfileCategAdapter(getSupportFragmentManager(), servierActivities.getSurveyCriteria()));
                 ESurvey.setSurveyActivityId(servierActivities.getSurveyActivityId());
             }
-
-
+            if (refresh.isRefreshing())
+                refresh.setRefreshing(false);
         }
     }
 }

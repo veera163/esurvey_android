@@ -6,8 +6,8 @@ package com.anyasoft.es.surveyapp.utility;
 
 public class AppConstant {
     public static final String HEADER = "Basic Y2xpZW50YXBwOjEyMzQ1Ng==";
-    public static final String BASEURL = "http://192.168.0.105:9090/";
-//    public static final String BASEURL = "http://34.195.106.0/";
+    //public static final String BASEURL = "http://192.168.0.105:9090/";
+    public static final String BASEURL = "http://34.195.106.0/";
     public static final String LOGINPATH = "oauth/token?grant_type=password&scope=read write&client_secret=123456&client_id=clientapp&";
     public static final String USERPATH = "/userOperationsV3/";
     public static String ACTIVITIESPATH = "surveyActivity/getSurveyorActivities";

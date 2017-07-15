@@ -28,8 +28,8 @@ public class ESurvey extends Application {
     private static final String LANGUAGE = "LANGUAGE";
     private static ESurvey mInstance;
     public static String userId = "";
-//    public static final String URL = "http://34.195.106.0";
-    public static final String URL = "http://192.168.0.105:9090";
+    public static final String URL = "http://34.195.106.0";
+//    public static final String URL = "http://192.168.0.105:9090";
     static SharedPreferences preference;
     static SharedPreferences.Editor editor;
     private static String ACCESSTOKEN = "accesstoken";
