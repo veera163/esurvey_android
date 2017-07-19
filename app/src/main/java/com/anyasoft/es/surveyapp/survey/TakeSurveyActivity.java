@@ -348,7 +348,7 @@ public class TakeSurveyActivity extends AppCompatActivity implements
             jsonRequest.put("timestamp", currentDate);
             L.d("PostLocationServices ::makePostGeoLocation()" + currentDate);
             jsonRequest.put("type", "survey");
-            jsonRequest.put("surveyor", ESurvey.userId);
+            jsonRequest.put("surveyor", ESurvey.getLoginId());
             if (location != null) {
                 jsonRequest.put("latlong", location.getLatitude() + "," + location.getLongitude());
             }//

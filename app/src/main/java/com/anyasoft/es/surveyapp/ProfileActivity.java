@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,6 +29,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.anyasoft.es.surveyapp.adapter.ProfileCategAdapter;
 import com.anyasoft.es.surveyapp.domains.ServierActivities;
+import com.anyasoft.es.surveyapp.domains.SurveyCriteriaItem;
 import com.anyasoft.es.surveyapp.domains.UserDomain;
 import com.anyasoft.es.surveyapp.internet.NetworkUtil;
 import com.anyasoft.es.surveyapp.internet.VolleySingleton;
@@ -40,6 +40,7 @@ import com.anyasoft.es.surveyapp.services.PostLocationServices;
 import com.anyasoft.es.surveyapp.services.SyncAllSurveyServices;
 import com.anyasoft.es.surveyapp.survey.SurveyManager;
 import com.anyasoft.es.surveyapp.utility.AppConstant;
+import com.anyasoft.es.surveyapp.utility.CustomProgressLoaderDialog;
 import com.anyasoft.es.surveyapp.utility.HttpHelper;
 import com.google.gson.Gson;
 
@@ -48,6 +49,7 @@ import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import io.realm.Realm;
@@ -58,7 +60,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private static final int REQUEST_LOCATION_SETTING = 101;
     CardView cardStartSurvey;
     CardView cardSyncAllData;
-    SwipeRefreshLayout refresh;
+    //SwipeRefreshLayout refresh;
+    CustomProgressLoaderDialog loader;
+    ProfileCategAdapter profileCategAdapter;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -76,12 +80,17 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.logout:
                 gotoLoginActivity();
                 return true;
+
+            case R.id.refresh:
+                new DashBoardCalls().execute(GETUSER);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
     private void gotoLoginActivity() {
+        ESurvey.clearCache();
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
@@ -90,6 +99,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     DashBoardCalls dashBoardCalls;
     RecyclerView rec_plans;
     ViewPager rec_categ;
+    TextView tv_no_activities;
     private CardView cardStartSurveyAll;
     private static final int MY_SOCKET_TIMEOUT_MS = 60 * 1000 * 3;
     RequestQueue queue;
@@ -101,11 +111,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private boolean isServiceStarted;
     private SurveyManager surveyManager;
     private RealmResults<SurveyResponse> allSurvey;
+    ArrayList<SurveyCriteriaItem> surveyCriteriaItems = new ArrayList<>();
     private TextView txtCountSurvey;
     private int count = 0;
     private String GETUSER = "getUser";
     private String GETACTIVITIES = "getActivities";
     private UserDomain user;
+    public int criteriaPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,35 +125,41 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        profileCategAdapter = new ProfileCategAdapter(getSupportFragmentManager(), surveyCriteriaItems);
         dashBoardCalls = new DashBoardCalls();
         rec_plans = (RecyclerView) findViewById(R.id.rec_plans);
         rec_categ = (ViewPager) findViewById(R.id.rec_categ);
+        rec_categ.setAdapter(profileCategAdapter);
+        tv_no_activities = (TextView) findViewById(R.id.tv_no_activities);
         cardStartSurvey = (CardView) findViewById(R.id.card_view_back);
         cardSyncAllData = (CardView) findViewById(R.id.sync_data);
-        refresh = (SwipeRefreshLayout) findViewById(R.id.refresh);
-        //refresh.setRefreshing(true);
-
-        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refresh.setRefreshing(true);
-                new DashBoardCalls().execute(GETUSER);
-            }
-        });
-        refresh.post(new Runnable() {
-            @Override
-            public void run() {
-                new DashBoardCalls().execute(GETUSER);
-            }
-        });
-
+        loader = new CustomProgressLoaderDialog(this);
         txtCountSurvey = (TextView) findViewById(R.id.title_back_all_sync);
         rec_plans.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         //rec_categ.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         cardStartSurvey.setOnClickListener(this);
         cardSyncAllData.setOnClickListener(this);
+
         cardStartSurveyAll = (CardView) findViewById(R.id.card_all_quest);
+
         cardStartSurveyAll.setOnClickListener(this);
+        rec_categ.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                ProfileActivity.this.criteriaPosition = position;
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         queue = VolleySingleton.getInstance().getRequestQueue();
         isAlltime = true;
         intent = new Intent(this, PostLocationServices.class);
@@ -291,7 +309,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             jsonRequest.put("timestamp", currentDate);
             L.d("ProfileActivity ::makePostGeoLocation()" + currentDate);
             jsonRequest.put("type", "survey");
-            jsonRequest.put("surveyor", ESurvey.userId);
+            jsonRequest.put("surveyor", ESurvey.getLoginId());
             if (location != null) {
                 jsonRequest.put("latlong", location.getLatitude() + "," + location.getLongitude());
             }//
@@ -379,11 +397,17 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         @Override
         protected ServierActivities doInBackground(String... params) {
             String s = params[0];
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    loader.showProgressLoader();
+                }
+            });
             currentMethod = s;
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(AppConstant.BASEURL);
             stringBuilder.append(AppConstant.USERPATH);
-            stringBuilder.append(ESurvey.userId);
+            stringBuilder.append(ESurvey.getLoginId());
             ESurvey.setUser(HttpHelper.sendGETRequest(stringBuilder.toString(), ESurvey.getAccessToken()));
             ProfileActivity.this.user = ESurvey.getUser();
             StringBuilder stringBuilder1 = new StringBuilder();
@@ -407,41 +431,28 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         @Override
         protected void onPostExecute(ServierActivities servierActivities) {
-           /* if (currentMethod.equalsIgnoreCase(GETUSER)) {
-                String s1 = "{\n" +
-                        "  \"statusCounts\": [\n" +
-                        "    {\n" +
-                        "      \"status\": \"Planned\",\n" +
-                        "      \"total\": 1\n" +
-                        "    }\n" +
-                        "  ],\n" +
-                        "  \"surveyCriteria\": [\n" +
-                        "    {\n" +
-                        "      \"category\": \"OC\",\n" +
-                        "      \"noOfSurveys\": \"30\",\n" +
-                        "      \"noOfCompleted\": \"10\",\n" +
-                        "      \"noOfPending\": \"20\",\n" +
-                        "      \"noOfOnHold\": \"10\",\n" +
-                        "      \"noOfCanceled\": \"10\"\n" +
-                        "    },\n" +
-                        "    {\n" +
-                        "      \"category\": \"Muslim\",\n" +
-                        "      \"noOfSurveys\": \"170\",\n" +
-                        "      \"noOfCompleted\": \"10\",\n" +
-                        "      \"noOfPending\": \"10\",\n" +
-                        "      \"noOfOnHold\": \"10\",\n" +
-                        "      \"noOfCanceled\": \"10\"\n" +
-                        "    }\n" +
-                        "  ]\n" +
-                        "}\n";*/
-            //dashBoardCalls.execute(GETACTIVITIES);
             if (servierActivities != null) {
                 //rec_plans.setAdapter(new ProfilePlansAdapter(servierActivities.getStatusCounts()));
-                rec_categ.setAdapter(new ProfileCategAdapter(getSupportFragmentManager(), servierActivities.getSurveyCriteria()));
-                ESurvey.setSurveyActivityId(servierActivities.getSurveyActivityId());
+                surveyCriteriaItems.clear();
+                if (servierActivities.getSurveyCriteria() != null) {
+                    if (servierActivities.getSurveyCriteria().size() > 0) {
+                        rec_categ.setVisibility(View.VISIBLE);
+                        tv_no_activities.setVisibility(View.GONE);
+                        surveyCriteriaItems.addAll(servierActivities.getSurveyCriteria());
+                        profileCategAdapter.notifyDataSetChanged();
+                        ESurvey.setSurveyActivityId(servierActivities.getSurveyActivityId());
+                        //rec_categ.setCurrentItem(criteriaPosition);
+                        loader.dismissProgressLoader();
+                    } else {
+                        rec_categ.setVisibility(View.GONE);
+                        tv_no_activities.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    rec_categ.setVisibility(View.GONE);
+                    tv_no_activities.setVisibility(View.VISIBLE);
+                }
             }
-            if (refresh.isRefreshing())
-                refresh.setRefreshing(false);
+
         }
     }
 }

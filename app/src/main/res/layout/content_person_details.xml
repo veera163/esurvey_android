@@ -105,6 +105,27 @@
              android:layout_below="@+id/textLayoutReligion"
              android:layout_centerHorizontal="true">
  -->
+
+        <TextView
+            android:id="@+id/tv_gender"
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textLayoutAge"
+            android:layout_centerHorizontal="true"
+            android:text="Gender"
+            android:textSize="@dimen/small_text_size" />
+
+        <TextView
+            android:id="@+id/tv_crit_label"
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textLayoutReligion"
+            android:layout_centerHorizontal="true"
+            android:text="criteria/Caste"
+            android:textSize="@dimen/small_text_size" />
+
         <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/edtCaste"
             style="@style/TextInputLayoutStyle"
@@ -212,7 +233,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/num_of_children"
-                android:inputType="textPersonName" />
+                android:inputType="number" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.AppCompatSpinner

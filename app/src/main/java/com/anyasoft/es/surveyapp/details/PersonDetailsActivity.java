@@ -310,7 +310,7 @@ public class PersonDetailsActivity extends AppCompatActivity implements View.OnC
             String url = "http://anyasoftindia.com/postGeoLocation";
             JSONObject jsonRequest = new JSONObject();
             jsonRequest.put("status", "Completed");
-            jsonRequest.put("surveyor", ESurvey.userId);
+            jsonRequest.put("surveyor", ESurvey.getLoginId());
             if (location != null) {
                 jsonRequest.put("latlong", location.getLatitude() + "," + location.getLongitude());
             }//

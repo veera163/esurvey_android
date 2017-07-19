@@ -1,5 +1,6 @@
 package com.anyasoft.es.surveyapp;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,6 +13,8 @@ import com.anyasoft.es.surveyapp.logger.L;
 import com.google.gson.Gson;
 
 import java.io.File;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import io.realm.Realm;
@@ -27,9 +30,8 @@ public class ESurvey extends Application {
     public static final boolean IS_DEBUG = true;
     private static final String LANGUAGE = "LANGUAGE";
     private static ESurvey mInstance;
-    public static String userId = "";
     public static final String URL = "http://34.195.106.0";
-//    public static final String URL = "http://192.168.0.105:9090";
+    //    public static final String URL = "http://192.168.0.105:9090";
     static SharedPreferences preference;
     static SharedPreferences.Editor editor;
     private static String ACCESSTOKEN = "accesstoken";
@@ -37,6 +39,8 @@ public class ESurvey extends Application {
     private static String USERINFO = "userInfo";
     private static Gson gson = new Gson();
     private static String SURVEYORACTIVITYID = "surveyorActivityId";
+    private static String EXPIREDATE = "ExpiteDate";
+    private static String USERLOGINID = "USERLOGINID";
 
     @Override
     public void onCreate() {
@@ -54,9 +58,12 @@ public class ESurvey extends Application {
 
     }//onCreate()
 
-    public static void setAccessToken(String accessToken, String refreshToken) {
+    public static void setAccessToken(String accessToken, String refreshToken, int expires_in) {
         editor.putString(ACCESSTOKEN, accessToken);
         editor.putString(REFRESHTOKEN, refreshToken);
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.SECOND, expires_in);
+        editor.putLong(EXPIREDATE, calendar.getTime().getTime());
         editor.commit();
     }
 
@@ -117,4 +124,27 @@ public class ESurvey extends Application {
         return mInstance.getApplicationContext();
     }
 
+    @SuppressLint({"CommitPrefEdits", "ApplySharedPref"})
+    public static void clearCache() {
+        preference.edit().clear();
+        preference.edit().apply();
+        preference.edit().commit();
+    }
+
+    public static boolean validateAccessToken() {
+        long l = preference.getLong(EXPIREDATE, 0);
+        Date expireDate = new Date(l);
+        Calendar expireDateOnCal = Calendar.getInstance();
+        expireDateOnCal.setTime(expireDate);
+        Calendar currentDateOnCal = Calendar.getInstance();
+        return expireDate.after(currentDateOnCal.getTime());
+    }
+
+    public static void setLoginId(String mEmail) {
+        editor.putString(USERLOGINID, mEmail);
+        editor.commit();
+    }
+    public static String getLoginId() {
+       return preference.getString(USERLOGINID,"NA");
+    }
 }//ESurvey

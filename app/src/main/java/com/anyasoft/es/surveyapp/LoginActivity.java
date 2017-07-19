@@ -114,6 +114,15 @@ public class LoginActivity extends AppCompatActivity {
         return false;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (ESurvey.validateAccessToken()) {
+            startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
+            finish();
+        }
+    }
+
     /**
      * Callback received when a permissions request has been completed.
      */
@@ -258,7 +267,7 @@ public class LoginActivity extends AppCompatActivity {
             urlBuilder.append(mPassword);
             urlBuilder.append("&username=");
             urlBuilder.append(mEmail);
-            ESurvey.userId = mEmail;
+            ESurvey.setLoginId(mEmail);
             return HttpHelper.sendPOSTRequest(urlBuilder.toString(), new String(), AppConstant.HEADER);
         }
 
@@ -274,7 +283,8 @@ public class LoginActivity extends AppCompatActivity {
                     jsonObject = new JSONObject(success);
                     if (jsonObject.has("access_token")) {
                         ESurvey.setAccessToken(jsonObject.getString("access_token"),
-                                jsonObject.getString("refresh_token"));
+                                jsonObject.getString("refresh_token"), jsonObject.getInt("expires_in"));
+
                         startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
                         finish();
                     } else {

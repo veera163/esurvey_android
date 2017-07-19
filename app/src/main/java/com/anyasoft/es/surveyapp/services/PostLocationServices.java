@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,8 +22,6 @@ import com.anyasoft.es.surveyapp.ESurvey;
 import com.anyasoft.es.surveyapp.internet.NetworkUtil;
 import com.anyasoft.es.surveyapp.internet.VolleySingleton;
 import com.anyasoft.es.surveyapp.logger.L;
-import com.anyasoft.es.surveyapp.question.SurveyActivity;
-import com.anyasoft.es.surveyapp.survey.TakeSurveyActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -161,7 +158,7 @@ public class PostLocationServices extends Service implements LocationListener {
 
     private void makePostGeoRequest(Location location) {
         try {
-            String url = ESurvey.URL+"/postGeoLocation";
+            String url = ESurvey.URL + "/postGeoLocation";
             JSONObject jsonRequest = new JSONObject();
             jsonRequest.put("status", "started");
             jsonRequest.put("badge_color", "red");
@@ -172,7 +169,7 @@ public class PostLocationServices extends Service implements LocationListener {
             jsonRequest.put("timestamp", currentDate);
             L.d("PostLocationServices ::makePostGeoLocation()" + currentDate);
             jsonRequest.put("type", "track");
-            jsonRequest.put("surveyor", ESurvey.userId);
+            jsonRequest.put("surveyor", ESurvey.getLoginId());
             if (location != null) {
                 jsonRequest.put("latlong", location.getLatitude() + "," + location.getLongitude());
             }//
