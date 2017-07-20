@@ -133,7 +133,7 @@ public class TakeSurveyActivity extends AppCompatActivity implements
     @Override
     public void setSecondFragment(int position) {
         this.position = position;
-        //onMarked();
+        onMarked(true);
         /*if (position == QuestionModel.questionList.size() - 1) {
             detailFragment = new PersonDetailsFragment();
             FragmentTransaction ft = fragmentManager.beginTransaction();

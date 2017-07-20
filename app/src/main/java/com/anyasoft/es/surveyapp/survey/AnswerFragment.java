@@ -139,8 +139,8 @@ public class AnswerFragment extends Fragment
                 if (isChecked) {
                     answer = rdOptA.getText().toString();
                     quest.setAnswer(answer);
-                    if (null != mListener)
-                        mListener.onMarked(true);
+                    //if (null != mListener)
+                        //mListener.onMarked(true);
                 } else {
                     answer = "";
                 }
@@ -153,8 +153,8 @@ public class AnswerFragment extends Fragment
                 if (isChecked) {
                     answer = rdOptB.getText().toString();
                     quest.setAnswer(answer);
-                    if (null != mListener)
-                        mListener.onMarked(true);
+                    //if (null != mListener)
+                        //mListener.onMarked(true);
                 } else {
                     answer = "";
                 }
@@ -167,8 +167,8 @@ public class AnswerFragment extends Fragment
                 if (isChecked) {
                     answer = rdOptC.getText().toString();
                     quest.setAnswer(answer);
-                    if (null != mListener)
-                        mListener.onMarked(true);
+                    //if (null != mListener)
+                        //mListener.onMarked(true);
                 } else {
                     answer = "";
                 }
@@ -181,8 +181,8 @@ public class AnswerFragment extends Fragment
                 if (isChecked) {
                     answer = rdOptD.getText().toString();
                     quest.setAnswer(answer);
-                    if (null != mListener)
-                        mListener.onMarked(true);
+                    //if (null != mListener)
+                        //mListener.onMarked(true);
                 } else {
                     answer = "";
                 }
@@ -195,8 +195,8 @@ public class AnswerFragment extends Fragment
                 if (isChecked) {
                     answer = rdOptE.getText().toString();
                     quest.setAnswer(answer);
-                    if (null != mListener)
-                        mListener.onMarked(true);
+                    //if (null != mListener)
+                        //mListener.onMarked(true);
                 } else {
                     answer = "";
                 }
@@ -209,8 +209,8 @@ public class AnswerFragment extends Fragment
                 if (isChecked) {
                     answer = rdOptF.getText().toString();
                     quest.setAnswer(answer);
-                    if (null != mListener)
-                        mListener.onMarked(true);
+                    //if (null != mListener)
+                        //mListener.onMarked(true);
                 } else {
                     answer = "";
                 }
@@ -223,8 +223,8 @@ public class AnswerFragment extends Fragment
                 if (isChecked) {
                     answer = rdOptG.getText().toString();
                     quest.setAnswer(answer);
-                    if (null != mListener)
-                        mListener.onMarked(true);
+                    //if (null != mListener)
+                        //mListener.onMarked(true);
                 } else {
                     answer = "";
                 }
@@ -237,8 +237,8 @@ public class AnswerFragment extends Fragment
                 if (isChecked) {
                     answer = rdOptH.getText().toString();
                     quest.setAnswer(answer);
-                    if (null != mListener)
-                        mListener.onMarked(true);
+                    //if (null != mListener)
+                        //mListener.onMarked(true);
                 } else {
                     answer = "";
                 }
@@ -251,8 +251,8 @@ public class AnswerFragment extends Fragment
                 if (isChecked) {
                     answer = rdOptI.getText().toString();
                     quest.setAnswer(answer);
-                    if (null != mListener)
-                        mListener.onMarked(true);
+                    //if (null != mListener)
+                        //mListener.onMarked(true);
                 } else {
                     answer = "";
                 }
@@ -292,8 +292,8 @@ public class AnswerFragment extends Fragment
                         answer += chkOptI.getText() + "";
                     }
                     quest.setAnswer(answer);
-                    if (null != mListener)
-                        mListener.onMarked(true);
+                    //if (null != mListener)
+                        //mListener.onMarked(true);
 
                     //
                 }
@@ -676,8 +676,8 @@ public class AnswerFragment extends Fragment
             }
             L.d("setting the question");
             quest.setAnswer(answer);
-            if (null != mListener)
-                mListener.onMarked(true);
+            //if (null != mListener)
+                //mListener.onMarked(true);
             reset();
             // }//if()...
         }//if()...
@@ -737,8 +737,8 @@ public class AnswerFragment extends Fragment
         }
         L.d("setting the question");
         quest.setAnswer(answer);
-        if (null != mListener)
-            mListener.onMarked(false);
+        //if (null != mListener)
+            //mListener.onMarked(false);
         reset();
         //onClick(btnMark);
     }

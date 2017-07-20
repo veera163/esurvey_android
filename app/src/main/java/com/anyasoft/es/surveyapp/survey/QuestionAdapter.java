@@ -109,7 +109,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         @Override
         public void onClick(View v) {
             if (null != myListener) {
-                myListener.OnItemClicked(v, getPosition());
+                myListener.OnItemClicked(v, getAdapterPosition());
             }//if()
         }
 
