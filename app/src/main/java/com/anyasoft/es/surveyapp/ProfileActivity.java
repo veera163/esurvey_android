@@ -80,7 +80,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.logout:
                 gotoLoginActivity();
                 return true;
-
             case R.id.refresh:
                 new DashBoardCalls().execute(GETUSER);
                 return true;

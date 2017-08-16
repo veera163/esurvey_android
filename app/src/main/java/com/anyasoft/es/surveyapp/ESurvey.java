@@ -126,9 +126,9 @@ public class ESurvey extends Application {
 
     @SuppressLint({"CommitPrefEdits", "ApplySharedPref"})
     public static void clearCache() {
-        preference.edit().clear();
-        preference.edit().apply();
-        preference.edit().commit();
+        SharedPreferences.Editor editor = preference.edit();
+        editor.clear();
+        editor.commit();
     }
 
     public static boolean validateAccessToken() {
@@ -144,7 +144,8 @@ public class ESurvey extends Application {
         editor.putString(USERLOGINID, mEmail);
         editor.commit();
     }
+
     public static String getLoginId() {
-       return preference.getString(USERLOGINID,"NA");
+        return preference.getString(USERLOGINID, "NA");
     }
 }//ESurvey
