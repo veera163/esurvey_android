@@ -2,17 +2,12 @@ package com.anyasoft.es.surveyapp.question;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSeekBar;
 import android.support.v7.widget.Toolbar;
@@ -20,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -28,25 +22,12 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.anyasoft.es.surveyapp.ESurvey;
 import com.anyasoft.es.surveyapp.R;
 import com.anyasoft.es.surveyapp.details.PersonDetailsActivity;
-import com.anyasoft.es.surveyapp.internet.Base64Strings;
-import com.anyasoft.es.surveyapp.internet.JSONConverter;
-import com.anyasoft.es.surveyapp.internet.JSONParser;
-import com.anyasoft.es.surveyapp.internet.VolleySingleton;
 import com.anyasoft.es.surveyapp.logger.L;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.lang.ref.WeakReference;
 import java.util.concurrent.TimeUnit;
 
 public class QuestionReviewActivity extends AppCompatActivity implements
@@ -167,7 +148,7 @@ public class QuestionReviewActivity extends AppCompatActivity implements
             // Add the request to the RequestQueue.
 
             startActivity(new Intent(this, PersonDetailsActivity.class));
-            finish();
+            //finish();
         }//
 
     }

@@ -163,7 +163,6 @@ public class AnswerFragment extends Fragment
         rdOptC.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
                 if (isChecked) {
                     answer = rdOptC.getText().toString();
                     quest.setAnswer(answer);

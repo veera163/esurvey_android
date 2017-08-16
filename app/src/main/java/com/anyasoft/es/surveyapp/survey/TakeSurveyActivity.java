@@ -82,6 +82,18 @@ public class TakeSurveyActivity extends AppCompatActivity implements
     private SurveyResponseManager responseManager;
 
     @Override
+    public void onBackPressed() {
+        if (personaldetails_fragment.getVisibility() == View.VISIBLE) {
+            questionFragment.getView().setVisibility(View.VISIBLE);
+            answerFragment.getView().setVisibility(View.VISIBLE);
+            detailFragment.getView().setVisibility(View.GONE);
+            personaldetails_fragment.setVisibility(View.GONE);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_survey);
