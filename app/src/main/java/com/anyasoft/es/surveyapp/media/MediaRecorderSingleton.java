@@ -21,6 +21,8 @@ public class MediaRecorderSingleton {
         recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
         recorder.setOutputFile(ESurvey.DIR_PATH+"/"+ESurvey.FILE_NAME);
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+        recorder.setAudioSamplingRate(44100);
+        recorder.setAudioEncodingBitRate(192000);
         recorder.prepare();
     }//
     public void destroyObject(){
