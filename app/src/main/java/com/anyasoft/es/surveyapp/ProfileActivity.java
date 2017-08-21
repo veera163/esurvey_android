@@ -396,12 +396,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         @Override
         protected ServierActivities doInBackground(String... params) {
             String s = params[0];
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    loader.showProgressLoader();
-                }
-            });
+
+            if (!loader.isShowing())
+                loader.showProgressLoader();
+
             currentMethod = s;
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(AppConstant.BASEURL);

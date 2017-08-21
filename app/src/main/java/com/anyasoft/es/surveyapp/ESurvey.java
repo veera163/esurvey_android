@@ -72,6 +72,7 @@ public class ESurvey extends Application {
     }
 
     public static UserDomain getUser() {
+
         return gson.fromJson(preference.getString(USERINFO, "NA"), UserDomain.class);
     }
 
