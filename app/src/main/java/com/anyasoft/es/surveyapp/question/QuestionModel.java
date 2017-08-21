@@ -11,7 +11,7 @@ public class QuestionModel {
     public static ArrayList<QuestionModel> questionList = new ArrayList<>();
     public static String details = "";
 
-    public static  String setID;
+    public static String setID;
     public static String latLong;
     private String question;
     private String optA;
@@ -22,9 +22,20 @@ public class QuestionModel {
     private String optF;
     private String optG;
 
+    private boolean current = false;
+
+    public boolean isCurrent() {
+        return current;
+    }
+
+    public void setCurrent(boolean current) {
+        this.current = current;
+    }
+
     public String getOptF() {
         return optF;
     }
+
     public String getOptA() {
         return optA;
     }//getOptA()
@@ -72,7 +83,6 @@ public class QuestionModel {
     private String optH;
     private String optI;
     private String optJ;
-
 
 
     private String questId;
@@ -153,9 +163,10 @@ public class QuestionModel {
     public void setQuestId(String questId) {
         this.questId = questId;
     }
-    public static void  clear(){
-        if(questionList != null)
-        questionList.clear();
+
+    public static void clear() {
+        if (questionList != null)
+            questionList.clear();
         details = "";
     }//
 }

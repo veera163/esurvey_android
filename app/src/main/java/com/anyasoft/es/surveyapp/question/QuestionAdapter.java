@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.anyasoft.es.surveyapp.R;
-import com.anyasoft.es.surveyapp.logger.L;
 
 import java.util.ArrayList;
 

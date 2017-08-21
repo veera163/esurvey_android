@@ -49,8 +49,8 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
     }//QuestionAdapter()...
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        QuestionModel model = questionModels.get(position);
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        final QuestionModel model = questionModels.get(position);
         if (holder.tvQuestion == null) {
             L.e("Null reference");
         }//
@@ -88,6 +88,21 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
             holder.tvTimeStamp.setText("00:00");
             holder.tvTimeStamp.setTextColor(Color.WHITE);
         }
+        if (model.isCurrent()) {
+            holder.rlMain.setCardBackgroundColor(Color.parseColor("#9C27B0"));
+        }
+        holder.convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != myListener) {
+                    myListener.OnItemClicked(v, position);
+                }
+                for (QuestionModel questionModel : questionModels)
+                    questionModel.setCurrent(false);
+                model.setCurrent(true);
+                notifyDataSetChanged();
+            }
+        });
 
     }//onBindViewHolder()...
 
@@ -97,7 +112,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
     }//getItemCount()
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
 
 
@@ -105,18 +120,12 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         TextView tvAnswer;
         TextView tvTimeStamp;
         CardView rlMain;
-
-        @Override
-        public void onClick(View v) {
-            if (null != myListener) {
-                myListener.OnItemClicked(v, getAdapterPosition());
-            }//if()
-        }
+        View convertView;
 
 
         public ViewHolder(View convertView) {
             super(convertView);
-            convertView.setOnClickListener(this);
+            this.convertView = convertView;
             tvQuestion = (TextView) convertView.findViewById(R.id.tvListQuestion);
             tvAnswer = (TextView) convertView.findViewById(R.id.tvAnswer);
             rlMain = (CardView) convertView.findViewById(R.id.main_list_cardView);

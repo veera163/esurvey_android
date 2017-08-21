@@ -48,7 +48,6 @@ public class QuestionReviewActivity extends AppCompatActivity implements
     private Handler myHandler = new Handler();
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,15 +110,15 @@ public class QuestionReviewActivity extends AppCompatActivity implements
         seekBar.setMax((int) finalTime);
 
         txtDuration.setText(String.format("%d min, %d sec",
-                        TimeUnit.MILLISECONDS.toMinutes((long) finalTime),
-                        TimeUnit.MILLISECONDS.toSeconds((long) finalTime) -
-                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) finalTime)))
+                TimeUnit.MILLISECONDS.toMinutes((long) finalTime),
+                TimeUnit.MILLISECONDS.toSeconds((long) finalTime) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) finalTime)))
         );
 
         txtChronometer.setText(String.format("%d min, %d sec",
-                        TimeUnit.MILLISECONDS.toMinutes((long) startTime),
-                        TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
-                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) startTime)))
+                TimeUnit.MILLISECONDS.toMinutes((long) startTime),
+                TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) startTime)))
         );
 
         seekBar.setProgress((int) startTime);
@@ -132,10 +131,10 @@ public class QuestionReviewActivity extends AppCompatActivity implements
             startTime = mediaPlayer.getCurrentPosition();
             txtChronometer.setText(String.format("%d : %d",
 
-                            TimeUnit.MILLISECONDS.toMinutes((long) startTime),
-                            TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
-                                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.
-                                            toMinutes((long) startTime)))
+                    TimeUnit.MILLISECONDS.toMinutes((long) startTime),
+                    TimeUnit.MILLISECONDS.toSeconds((long) startTime) -
+                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.
+                                    toMinutes((long) startTime)))
             );
             seekBar.setProgress((int) startTime);
             myHandler.postDelayed(this, 100);
