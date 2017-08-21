@@ -40,6 +40,7 @@ import com.anyasoft.es.surveyapp.services.PostLocationServices;
 import com.anyasoft.es.surveyapp.services.SyncAllSurveyServices;
 import com.anyasoft.es.surveyapp.survey.SurveyManager;
 import com.anyasoft.es.surveyapp.utility.AppConstant;
+import com.anyasoft.es.surveyapp.utility.ConnectionDetector;
 import com.anyasoft.es.surveyapp.utility.CustomProgressLoaderDialog;
 import com.anyasoft.es.surveyapp.utility.HttpHelper;
 import com.google.gson.Gson;
@@ -81,7 +82,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 gotoLoginActivity();
                 return true;
             case R.id.refresh:
-                new DashBoardCalls().execute(GETUSER);
+                if (new ConnectionDetector(this).isConnectedToInternet())
+                    new DashBoardCalls().execute(GETUSER);
+                else
+                    Snackbar.make(getCurrentFocus(), "you are in Offline", Snackbar.LENGTH_INDEFINITE).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -177,7 +181,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onResume() {
         super.onResume();
-        new DashBoardCalls().execute(GETUSER);
+        if (new ConnectionDetector(this).isConnectedToInternet())
+            new DashBoardCalls().execute(GETUSER);
+        else
+            Snackbar.make(findViewById(R.id.parentPanel), "you are in Offline", Snackbar.LENGTH_INDEFINITE).show();
+
         countPendingSurvey();
         if (NetworkUtil.isOnline(this)) {
             if (location == null)
@@ -396,16 +404,22 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         @Override
         protected ServierActivities doInBackground(String... params) {
             String s = params[0];
-
-            if (!loader.isShowing())
-                loader.showProgressLoader();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (!loader.isShowing())
+                        loader.showProgressLoader();
+                }
+            });
 
             currentMethod = s;
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(AppConstant.BASEURL);
             stringBuilder.append(AppConstant.USERPATH);
             stringBuilder.append(ESurvey.getLoginId());
-            ESurvey.setUser(HttpHelper.sendGETRequest(stringBuilder.toString(), ESurvey.getAccessToken()));
+            if (new ConnectionDetector(ProfileActivity.this).isConnectedToInternet()) {
+                ESurvey.setUser(HttpHelper.sendGETRequest(stringBuilder.toString(), ESurvey.getAccessToken()));
+            }
             ProfileActivity.this.user = ESurvey.getUser();
             StringBuilder stringBuilder1 = new StringBuilder();
             stringBuilder1.append(AppConstant.BASEURL);
